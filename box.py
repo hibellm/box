@@ -8,7 +8,7 @@ from boxsdk.object.collaboration import CollaborationRole
 from auth import authenticate
 
 #DEVELOPMENT TOKEN
-devtoken='mH89PQjvND9Eq1hG8nGGKYnNuPpt8wkh'
+devtoken='TlxCiKre7SlsOx4MJBAmx5gDkptQZVcp'
 
 
 from boxsdk import DevelopmentClient
@@ -38,7 +38,41 @@ def run_folder_examples(client):
     for item in items:
         print('Folder:' + item.name+' ['+item._description+']')
 
-run_folder_examples(client)
+    return items
+
+x=run_folder_examples(client)
+
+
+def get_folderinfo(client,folder_id):
+    folder_info = client.folder(folder_id).get()
+
+    print('Folder info:')
+    print('         id: '+folder_info['id'])
+    print('       name: ' + folder_info['name'])
+    print('description: ' + folder_info['description'])
+    print('    created: ' + folder_info['created_by']._description+' ['+folder_info['created_at']+']')
+
+    return folder_info
+
+folder_info=get_folderinfo(client,'66753612692')
+
+
+def get_fileinfo(client, file_id):
+
+    file_items = client.folder(folder_id='66753612692').get_items()
+
+    file_info = client.folder(file_id).get()
+
+    print('Folder info:')
+    print('         id: ' + file_info['id'])
+    print('       name: ' + file_info['name'])
+    print('description: ' + file_info['description'])
+    print('    created: ' + file_info['created_by']._description + ' [' + file_info['created_at'] + ']')
+
+    return file_info
+
+
+file_info = get_fileinfo(client, '66753612692')
 
 
 def run_collab_examples(client):
