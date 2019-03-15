@@ -8,7 +8,7 @@ from boxsdk.object.collaboration import CollaborationRole
 from auth import authenticate
 
 #DEVELOPMENT TOKEN
-devtoken='TlxCiKre7SlsOx4MJBAmx5gDkptQZVcp'
+devtoken='xxx'
 
 
 from boxsdk import DevelopmentClient
