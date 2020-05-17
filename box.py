@@ -5,11 +5,10 @@ import os
 from boxsdk import Client
 from boxsdk.exception import BoxAPIException
 from boxsdk.object.collaboration import CollaborationRole
-from auth import authenticate
+# from auth import authenticate
 
-#DEVELOPMENT TOKEN
-devtoken='TlxCiKre7SlsOx4MJBAmx5gDkptQZVcp'
-
+# DEVELOPMENT TOKEN
+devtoken='N8cfPlhPz1I55WxjvzK24l62jZX4araV'
 
 from boxsdk import DevelopmentClient
 client = DevelopmentClient()
@@ -19,12 +18,13 @@ print('The current user ID is {0}'.format(user.id))
 
 
 def run_user_example(client):
+
     # 'me' is a handy value to get info on the current authenticated user.
     me = client.user(user_id='me').get(fields=['login'])
     print('About the user:')
-    print('Name : {0}'.format(user['name']))
-    print('Email: {0}'.format(user['login']))
-    print('Phone: {0}'.format(user['phone']))
+    print(f"Name : {user['name']}")
+    print(f"Email: {user['login']}")
+    print(f"Phone: {user['phone']}")
 
 run_user_example(client)
 
@@ -36,25 +36,27 @@ def run_folder_examples(client):
     items = root_folder.get_items(limit=100, offset=0)
     print('These are the first 100 items in the root folder:')
     for item in items:
-        print('Folder:' + item.name+' ['+item._description+']')
+        print(f"Folder: {item.name} [{item._description}]")
 
     return items
 
-x=run_folder_examples(client)
+x = run_folder_examples(client)
 
 
-def get_folderinfo(client,folder_id):
+def get_folderinfo(client, folder_id):
+
     folder_info = client.folder(folder_id).get()
 
     print('Folder info:')
-    print('         id: '+folder_info['id'])
-    print('       name: ' + folder_info['name'])
-    print('description: ' + folder_info['description'])
-    print('    created: ' + folder_info['created_by']._description+' ['+folder_info['created_at']+']')
+    print(f"         id: {folder_info['id']}")
+    print(f"       name: {folder_info['name']}")
+    print(f"description: {folder_info['description']}")
+    print(f" created by: {folder_info['created_by']._description} [{folder_info['created_at']}]")
 
     return folder_info
 
-folder_info=get_folderinfo(client,'66753612692')
+
+folder_info = get_folderinfo(client, '66753612692')
 
 
 def get_fileinfo(client, file_id):
@@ -63,11 +65,11 @@ def get_fileinfo(client, file_id):
 
     file_info = client.folder(file_id).get()
 
-    print('Folder info:')
-    print('         id: ' + file_info['id'])
-    print('       name: ' + file_info['name'])
-    print('description: ' + file_info['description'])
-    print('    created: ' + file_info['created_by']._description + ' [' + file_info['created_at'] + ']')
+    print(f"Folder info:")
+    print(f"         id: {file_info['id']}")
+    print(f"       name: {file_info['name']}")
+    print(f"description: {file_info['description']}")
+    print(f" created by: {file_info['created_by']._description} [{file_info['created_at']} ]")
 
     return file_info
 
@@ -79,43 +81,46 @@ def run_collab_examples(client):
     root_folder = client.folder(folder_id='0')
     collab_folder = root_folder.create_subfolder('collab folder')
     try:
-        print('Folder {0} created'.format(collab_folder.get()['name']))
+        print(f"Folder {collab_folder.get()['name']} created")
         collaboration = collab_folder.add_collaborator('someone@example.com', CollaborationRole.VIEWER)
-        print('Created a collaboration')
+        print("Created a collaboration")
         try:
             modified_collaboration = collaboration.update_info(role=CollaborationRole.EDITOR)
-            print('Modified a collaboration: {0}'.format(modified_collaboration.role))
+            print(f"Modified a collaboration: {modified_collaboration.role}")
         finally:
             collaboration.delete()
             print('Deleted a collaboration')
     finally:
         # Clean up
-        print('Delete folder collab folder succeeded: {0}'.format(collab_folder.delete()))
+        print(f"Delete folder collab folder succeeded: {collab_folder.delete()}")
 
 
-def create_folder(client):
-    root_folder = client.folder(folder_id='0')
+
+def create_folder(client, foldername=None, root_folder_id='0', ):
+    root_folder = client.folder(root_folder_id)
 
     try:
-        foo = root_folder.create_subfolder('foo')
-        print('Folder created : {0} '.format(foo.get()['name']))
-    except:
+        newfolder = root_folder.create_subfolder(foldername)
+        print(f"Folder created : {newfolder.get()['name']}")
+    except Exception as e:
         print('Something went wrong with creating a folder...')
         print('Folder probably already exists...getting folder list ')
         run_folder_examples(client)
 
-create_folder(client)
+create_folder(client, 'marcustest')
+
+
 
 def rename_folder(client):
     root_folder = client.folder(folder_id='0')
     foo = root_folder.create_subfolder('foo')
     try:
-        print('Folder {0} created'.format(foo.get()['name']))
+        print(f"Folder {foo.get()['name']} created")
 
         bar = foo.rename('bar')
-        print('Renamed to {0}'.format(bar.get()['name']))
+        print(f"Renamed to {bar.get()['name']}")
     finally:
-        print('Delete folder bar succeeded: {0}'.format(foo.delete()))
+        print(f"Delete folder bar succeeded: {foo.delete()}")
 
 rename_folder(client)
 
@@ -125,12 +130,12 @@ def get_folder_shared_link(client):
     root_folder = client.folder(folder_id='0')
     collab_folder = root_folder.create_subfolder('shared link folder')
     try:
-        print('Folder {0} created'.format(collab_folder.get().name))
+        print(f"Folder {collab_folder.get().name} created")
 
         shared_link = collab_folder.get_shared_link()
-        print('Got shared link:' + shared_link)
+        print(f"Got shared link: {shared_link}")
     finally:
-        print('Delete folder collab folder succeeded: {0}'.format(collab_folder.delete()))
+        print(f"Delete folder collab folder succeeded: {collab_folder.delete()}")
 
 
 def upload_file(client):
@@ -138,9 +143,9 @@ def upload_file(client):
     file_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'file.txt')
     a_file = root_folder.upload(file_path, file_name='i-am-a-file.txt')
     try:
-        print('{0} uploaded: '.format(a_file.get()['name']))
+        print(f"{a_file.get()['name']} uploaded: ")
     finally:
-        print('Delete i-am-a-file.txt succeeded: {0}'.format(a_file.delete()))
+        print(f"Delete i-am-a-file.txt succeeded: {a_file.delete()}")
 
 
 def upload_accelerator(client):
