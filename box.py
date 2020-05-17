@@ -5,7 +5,14 @@ import os
 from boxsdk import Client
 from boxsdk.exception import BoxAPIException
 from boxsdk.object.collaboration import CollaborationRole
+<<<<<<< HEAD
 # from auth import authenticate
+=======
+from auth import authenticate
+
+#DEVELOPMENT TOKEN
+devtoken='xxx'
+>>>>>>> master
 
 # DEVELOPMENT TOKEN
 devtoken='N8cfPlhPz1I55WxjvzK24l62jZX4araV'
