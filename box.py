@@ -5,17 +5,10 @@ import os
 from boxsdk import Client
 from boxsdk.exception import BoxAPIException
 from boxsdk.object.collaboration import CollaborationRole
-<<<<<<< HEAD
 # from auth import authenticate
-=======
-from auth import authenticate
 
 #DEVELOPMENT TOKEN
 devtoken='xxx'
->>>>>>> master
-
-# DEVELOPMENT TOKEN
-devtoken='N8cfPlhPz1I55WxjvzK24l62jZX4araV'
 
 from boxsdk import DevelopmentClient
 client = DevelopmentClient()
@@ -101,20 +94,48 @@ def run_collab_examples(client):
         # Clean up
         print(f"Delete folder collab folder succeeded: {collab_folder.delete()}")
 
+# expires_at('2012-12-12T10:53:43-08:00')
 
 
-def create_folder(client, foldername=None, root_folder_id='0', ):
+def create_folder(client, foldername=None, root_folder_id='0', description='test description'):
     root_folder = client.folder(root_folder_id)
 
     try:
         newfolder = root_folder.create_subfolder(foldername)
-        print(f"Folder created : {newfolder.get()['name']}")
+        print(f"Folder created : {newfolder.get()['name']} (ID: {newfolder.get()['id']})")
+        updated_folder = client.folder(newfolder.get()['id']).update_info({
+            'description': 'Old planning documents',
+        })
+        print('Folder updated!')
     except Exception as e:
         print('Something went wrong with creating a folder...')
         print('Folder probably already exists...getting folder list ')
         run_folder_examples(client)
 
-create_folder(client, 'marcustest')
+create_folder(client, 'frogdfghdjkkd')
+
+# FOLDER marcustest  id Is
+folder_info = get_folderinfo(client, '66753612692')
+
+
+comment = client.file(file_id='11111').add_comment('When should I have this done by?')
+
+
+def update_folder(client, folderid=None, root_folder_id='0', fields=None):
+    root_folder = client.folder(root_folder_id)
+    try:
+        folder_info = client.folder(folderid).get()
+        updated_folder = client.folder(folderid).update_info(fields)
+        print(f"Folder {folder_info['name']} (ID: {folder_info.get()['id']}) updated!")
+    except Exception as e:
+        print('Something went wrong with creating a folder...')
+        print('Folder probably already exists...getting folder list ')
+        run_folder_examples(client)
+
+
+folderfield = {'description': 'xxThis is a description entered by my BOX API calls'}
+update_folder(client, '66753612692', fields=folderfield)
+
 
 
 
@@ -193,17 +214,17 @@ def update_file(client):
         file_v1.delete()
 
 
-def search_files(client):
+def searchfiles(client):
     search_results = client.search().query(
         'i-am-a-file.txt',
-        limit=2,
+        limit=99,
         offset=0,
         ancestor_folders=[client.folder(folder_id='0')],
         file_extensions=['txt'],
     )
     for item in search_results:
         item_with_name = item.get(fields=['name'])
-        print('matching item: ' + item_with_name.id)
+        print(f'matching item: {item_with_name.id}')
     else:
         print('no matching items')
 
@@ -258,7 +279,6 @@ def move_item(client):
 
 def get_events(client):
     print(client.events().get_events(limit=100, stream_position='now'))
-
 
 def get_latest_stream_position(client):
     print(client.events().get_latest_stream_position())
@@ -340,9 +360,7 @@ def run_metadata_example(client):
 
 
 def run_examples(oauth):
-
     client = Client(oauth)
-
     run_user_example(client)
     run_folder_examples(client)
     run_collab_examples(client)
@@ -364,6 +382,17 @@ def run_examples(oauth):
 
     # Premium Apps only
     upload_accelerator(client)
+
+
+def createdelivery():
+
+    create_folder()
+    update_folder()
+    upload_file()
+    collaborator()
+
+
+
 
 
 def main():
