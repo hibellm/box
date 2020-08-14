@@ -5,10 +5,11 @@ import os
 from boxsdk import Client
 from boxsdk.exception import BoxAPIException
 from boxsdk.object.collaboration import CollaborationRole
-# from auth import authenticate
+from auth import authenticate
 
-#DEVELOPMENT TOKEN
-devtoken='xxx'
+# DEVELOPMENT TOKEN
+devtoken=''
+
 
 from boxsdk import DevelopmentClient
 client = DevelopmentClient()
@@ -60,8 +61,7 @@ folder_info = get_folderinfo(client, '66753612692')
 
 
 def get_fileinfo(client, file_id):
-
-    file_items = client.folder(folder_id='66753612692').get_items()
+    # file_items = client.folder(folder_id='66753612692').get_items()
 
     file_info = client.folder(file_id).get()
 
@@ -94,48 +94,20 @@ def run_collab_examples(client):
         # Clean up
         print(f"Delete folder collab folder succeeded: {collab_folder.delete()}")
 
-# expires_at('2012-12-12T10:53:43-08:00')
 
 
-def create_folder(client, foldername=None, root_folder_id='0', description='test description'):
+def create_folder(client, foldername=None, root_folder_id='0', ):
     root_folder = client.folder(root_folder_id)
 
     try:
         newfolder = root_folder.create_subfolder(foldername)
-        print(f"Folder created : {newfolder.get()['name']} (ID: {newfolder.get()['id']})")
-        updated_folder = client.folder(newfolder.get()['id']).update_info({
-            'description': 'Old planning documents',
-        })
-        print('Folder updated!')
+        print(f"Folder created : {newfolder.get()['name']}")
     except Exception as e:
         print('Something went wrong with creating a folder...')
         print('Folder probably already exists...getting folder list ')
         run_folder_examples(client)
 
-create_folder(client, 'frogdfghdjkkd')
-
-# FOLDER marcustest  id Is
-folder_info = get_folderinfo(client, '66753612692')
-
-
-comment = client.file(file_id='11111').add_comment('When should I have this done by?')
-
-
-def update_folder(client, folderid=None, root_folder_id='0', fields=None):
-    root_folder = client.folder(root_folder_id)
-    try:
-        folder_info = client.folder(folderid).get()
-        updated_folder = client.folder(folderid).update_info(fields)
-        print(f"Folder {folder_info['name']} (ID: {folder_info.get()['id']}) updated!")
-    except Exception as e:
-        print('Something went wrong with creating a folder...')
-        print('Folder probably already exists...getting folder list ')
-        run_folder_examples(client)
-
-
-folderfield = {'description': 'xxThis is a description entered by my BOX API calls'}
-update_folder(client, '66753612692', fields=folderfield)
-
+create_folder(client, 'marcustest')
 
 
 
@@ -214,20 +186,21 @@ def update_file(client):
         file_v1.delete()
 
 
-def searchfiles(client):
+def search_files(client):
     search_results = client.search().query(
-        'i-am-a-file.txt',
+        'about.html',
         limit=99,
         offset=0,
         ancestor_folders=[client.folder(folder_id='0')],
-        file_extensions=['txt'],
+        file_extensions=['html'],
     )
     for item in search_results:
         item_with_name = item.get(fields=['name'])
-        print(f'matching item: {item_with_name.id}')
+        print('matching item: ' + item_with_name.id)
     else:
         print('no matching items')
 
+search_files(client)
 
 def copy_item(client):
     root_folder = client.folder(folder_id='0')
@@ -279,6 +252,7 @@ def move_item(client):
 
 def get_events(client):
     print(client.events().get_events(limit=100, stream_position='now'))
+
 
 def get_latest_stream_position(client):
     print(client.events().get_latest_stream_position())
@@ -360,7 +334,9 @@ def run_metadata_example(client):
 
 
 def run_examples(oauth):
+
     client = Client(oauth)
+
     run_user_example(client)
     run_folder_examples(client)
     run_collab_examples(client)
@@ -384,19 +360,7 @@ def run_examples(oauth):
     upload_accelerator(client)
 
 
-def createdelivery():
-
-    create_folder()
-    update_folder()
-    upload_file()
-    collaborator()
-
-
-
-
-
 def main():
-
     # Please notice that you need to put in your client id and client secret in demo/auth.py in order to make this work.
     oauth, _, _ = authenticate()
     run_examples(oauth)
