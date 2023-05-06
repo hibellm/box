@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a7694e84-d465-4e1a-a413-9b20cd8a62a1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/box.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/box.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/box.py" beforeDir="false" afterPath="$PROJECT_DIR$/box.py" afterDir="false" />
     </list>
@@ -20,12 +22,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="138" />
-    <option name="y" value="45" />
-    <option name="width" value="1618" />
-    <option name="height" value="998" />
-  </component>
   <component name="ProjectId" id="1c2XuCSgaZdAvM1ijsdTjbCCBiN" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -36,7 +32,14 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../decorators_reference.py" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\projects\box" />
+    </key>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -50,6 +53,16 @@
       <updated>1549990357168</updated>
     </task>
     <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1636926669727">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1636926669727" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1631479960014">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1631479960014" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="setValue">

@@ -374,3 +374,35 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
+
+#### COLLABORATION
+
+from boxsdk.object.collaboration import CollaborationRole
+
+# SET USER + ADD USER AS COLLABORATOR(VIEWER) TO FOLDER
+user = client.user(user_id='11111')
+collaboration = client.folder(folder_id='22222').collaborate(user, CollaborationRole.VIEWER)
+
+collaborator = collaboration.accessible_by
+item = collaboration.item
+print(f"{collaborator.name} {'has' if collaboration.status == 'accepted' else 'has not'} accepted the collaboration to folder {item.name}")
+
+
+# CHECK COLLABORATION
+collaboration = client.collaboration(collab_id=collaboration.id).get()
+
+
+
+
+
+
+
+
+
+
+
+
+
